@@ -5,14 +5,14 @@
 # @Desc  : 从指定网站上获取代理ip,
 #          我目前在使用站大爷，就以站大爷为例
 
+from gevent import monkey
+monkey.patch_all()
+
 import requests
 import time
 import utils
 import settings
 from gevent.pool import Pool
-from gevent import monkey
-
-monkey.patch_all()
 
 
 class ZdyIpGetter:
@@ -23,7 +23,7 @@ class ZdyIpGetter:
 
     def __init__(self):
         # 购买服务时，网站给出的提取ip的api，替换成自己的
-        self.api_url = 'http://xxxxxxxxxxxxxxxxxxxxxxxxxx'
+        self.api_url = 'http://www.zdopen.com/PrivateProxy/GetIP/?api=202210181626137663&akey=1f5679241fe6d56e'
         self.logger = utils.get_logger(getattr(self.__class__, '__name__'))
         self.proxy_list = []
         self.good_proxy_list = []

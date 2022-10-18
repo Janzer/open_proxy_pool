@@ -8,7 +8,8 @@
 IP_POOL_KEY = 'open_proxy_pool'
 
 # redis连接，根据实际情况进行配置
-REDIS_SERVER_URL = 'redis://:your_password@your_host:port/db_name'
+# REDIS_SERVER_URL = 'redis://:your_password@your_host:port/db_name'
+REDIS_SERVER_URL = 'redis://:@127.0.0.1:6379/0'
 
 # api对外端口
 API_WEB_PORT = 9102
