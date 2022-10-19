@@ -32,7 +32,7 @@ class SquidKeeper:
         """
         self.logger.info('读取代理池中可用ip')
         proxy_ips = self.server.zrangebyscore(settings.IP_POOL_KEY, int(time.time()),
-                                              int(time.time()) + settings.PROXY_IP_TTL * 10)
+                                              int(time.time()) + settings.PROXY_IP_TTL)
         return proxy_ips
 
     def update_conf(self, proxy_list):

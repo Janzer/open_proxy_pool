@@ -15,7 +15,7 @@ REDIS_SERVER_URL = 'redis://:@10.32.157.82:6379/0'
 API_WEB_PORT = 9102
 
 # 代理是否需要通过密码访问,当此项为False时可无视USERNAME和PASSWORD的配置
-USE_PASSWORD = False
+USE_PASSWORD = True
 
 # 用户名
 # 注意：用户名密码是指代理服务方提供给你，用以验证访问授权的凭证。
@@ -31,7 +31,7 @@ PASSWORD = 'jy156278'
 WEB_API_OPENED = True
 
 # 打开squid代理转发服务的维持脚本，不使用squid的话可以关闭
-SQUID_KEEPER_OPENED = True
+SQUID_KEEPER_OPENED = False
 
 # 打开清理过期ip的脚本，如果池内的代理ip永远不会失效的话可以关闭
 EXPIRE_IP_CLEANER_OPENED = False
@@ -41,12 +41,12 @@ IP_GETTER_OPENED = True
 
 # ***********************************
 
-# 清理代理ip的频率，如下配置代表每两次之间间隔6秒
-CLEAN_INTERVAL = 6
+# 清理代理ip的频率，如下配置代表每两次之间间隔60秒
+CLEAN_INTERVAL = 60
 
 # 获取代理ip的频率，根据api的请求频率限制进行设置
-# 比如`站大爷`的频率限制是10秒一次，我就设置成了12秒
-FETCH_INTERVAL = 12
+# 比如`站大爷`的频率限制是10秒一次，就设置成12秒
+FETCH_INTERVAL = 30
 
 # squid从redis中加载新ip的频率
 SQUID_KEEPER_INTERVAL = 60

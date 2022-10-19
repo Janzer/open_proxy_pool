@@ -23,7 +23,7 @@ class ZdyIpGetter:
 
     def __init__(self):
         # 购买服务时，网站给出的提取ip的api，替换成自己的
-        self.api_url = 'http://www.zdopen.com/PrivateProxy/GetIP/?i=1&api=202210191342191877&akey=c5faada0c6fe7198&count=2&fitter=2&timespan=29&type=1'
+        self.api_url = 'http://www.zdopen.com/ShortProxy/GetIP/?api=202210191605109833&akey=cfafe9a43d113996&timespan=5&type=1&fitter=2'
         self.logger = utils.get_logger(getattr(self.__class__, '__name__'))
         self.proxy_list = []
         self.good_proxy_list = []

@@ -24,7 +24,7 @@ def random_ip():
     """
     # 获取redis中仍可用的全部ip
     proxy_ips = redis_client.zrangebyscore(ip_pool_key, int(time.time()),
-                                           int(time.time()) + settings.PROXY_IP_TTL * 10)
+                                           int(time.time()) + settings.PROXY_IP_TTL)
     if proxy_ips:
         ip = random.choice(proxy_ips)
         # 如果ip需要密码访问，则添加
