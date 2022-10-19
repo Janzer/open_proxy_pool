@@ -43,18 +43,15 @@ class SquidKeeper:
         :return:
         """
         self.logger.info('准备加载到squid中')
-        self.logger.info('准备加载到squid中0')
         with open('squid.conf', 'r', encoding='utf-8') as f:
             squid_conf = f.readlines()
         squid_conf.append('\n# Cache peer config\n')
-        self.logger.info('准备加载到squid中1')
         for proxy in proxy_list:
             ip, port = proxy.decode('utf8').split(':')
             squid_conf.append(self.peer_conf % (ip, port))
         with open('/etc/squid/squid.conf', 'w') as f:
             f.writelines(squid_conf)
         failed = os.system('squid -k reconfigure')
-        self.logger.info('准备加载到squid中2')
         # 这是一个容错措施
         # 当重新加载配置文件失败时，会杀死全部相关进行并重试
         if failed:

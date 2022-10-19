@@ -32,7 +32,7 @@ def random_ip():
             ip = '{}:{}@{}'.format(settings.USERNAME, settings.PASSWORD, ip.decode('utf8'))
         return ip
     else:
-        return ''
+        return 'Not Found!'
 
 
 @app.route('/total/')

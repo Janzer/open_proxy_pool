@@ -23,7 +23,7 @@ class ZdyIpGetter:
 
     def __init__(self):
         # 购买服务时，网站给出的提取ip的api，替换成自己的
-        self.api_url = 'http://www.zdopen.com/PrivateProxy/GetIP/?api=202210181626137663&akey=1f5679241fe6d56e'
+        self.api_url = 'http://www.zdopen.com/PrivateProxy/GetIP/?i=1&api=202210191342191877&akey=c5faada0c6fe7198&count=2&fitter=2&timespan=29&type=1'
         self.logger = utils.get_logger(getattr(self.__class__, '__name__'))
         self.proxy_list = []
         self.good_proxy_list = []
@@ -37,6 +37,7 @@ class ZdyIpGetter:
         :param proxy:
         :return:
         """
+        # proxy = '198.12.85.214:80'
         if settings.USE_PASSWORD:
             tmp_proxy = '{}:{}@{}'.format(settings.USERNAME, settings.PASSWORD, proxy)
         else:
@@ -46,11 +47,14 @@ class ZdyIpGetter:
             'https': 'https://' + tmp_proxy,
         }
         try:
-            # 验证代理是否可用时，访问的是ip138的服务
-            resp = requests.get('http://2019.ip138.com/ic.asp', proxies=proxies, timeout=10)
-            # self.logger.info(resp.content.decode('gb2312'))
+            # 验证代理是否可用时
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4396.0 Safari/537.36'
+            }
+            resp = requests.get("http://httpbin.org/ip", headers=headers, proxies=proxies, timeout=10)
+
             # 判断是否成功使用代理ip进行访问
-            assert proxy.split(':')[0] in resp.content.decode('gb2312')
+            assert resp.status_code == 200 and proxy.split(':')[0] in resp.content.decode('gb2312')
             self.logger.info('[GOOD] - {}'.format(proxy))
             self.good_proxy_list.append(proxy)
         except Exception as e:
@@ -74,7 +78,7 @@ class ZdyIpGetter:
         elif 'bad' in res:
             self.logger.error('请求失败！')
         # 检测未考虑到的异常情况
-        elif res.count('.') != 15:
+        elif res.count('.') < 3:
             self.logger.error(res)
         else:
             self.logger.info('开始读取代理列表！')
@@ -95,7 +99,7 @@ class ZdyIpGetter:
         :return:
         """
         for proxy in self.good_proxy_list:
-            self.server.zadd(settings.IP_POOL_KEY, int(time.time()) + settings.PROXY_IP_TTL, proxy)
+            self.server.zadd(settings.IP_POOL_KEY, {proxy: int(time.time()) + settings.PROXY_IP_TTL})
 
     def fetch_new_ip(self):
         """
