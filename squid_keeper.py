@@ -45,7 +45,8 @@ class SquidKeeper:
         self.logger.info('准备加载到squid中')
         with open('squid.conf', 'r', encoding='utf-8') as f:
             squid_conf = f.readlines()
-        squid_conf.append('\n# Cache peer config\n')
+        squid_conf.append('\n')
+        # squid_conf.append('\n# Cache peer config\n')
         for proxy in proxy_list:
             ip, port = proxy.decode('utf8').split(':')
             squid_conf.append(self.peer_conf % (ip, port))
